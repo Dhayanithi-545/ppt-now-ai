@@ -1,0 +1,875 @@
+{
+  "_doc": "Single source of truth for layouts. Every layout reads the same flat SlideContent; `fields` lists what it uses and the hard text limits (characters). Used by the React components, the Gemini prompts/schemas and validation.",
+  "layouts": {
+    "cover-hero": {
+      "name": "Cover · Centered hero",
+      "group": "Cover",
+      "kind": "hero",
+      "use": "Opening slide. Bold centered title on a rich background.",
+      "fields": {
+        "eyebrow": {
+          "max": 32
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 130
+        },
+        "meta": {
+          "max": 60
+        }
+      }
+    },
+    "cover-split": {
+      "name": "Cover · Split image",
+      "group": "Cover",
+      "kind": "hero",
+      "use": "Opening slide with a strong photo or illustration beside the title.",
+      "fields": {
+        "eyebrow": {
+          "max": 32
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "subtitle": {
+          "max": 120
+        },
+        "meta": {
+          "max": 60
+        },
+        "image": {}
+      }
+    },
+    "cover-editorial": {
+      "name": "Cover · Editorial",
+      "group": "Cover",
+      "kind": "hero",
+      "use": "Opening slide with magazine-style oversized type. Good for reports, lectures and talks.",
+      "fields": {
+        "eyebrow": {
+          "max": 32
+        },
+        "title": {
+          "max": 48,
+          "required": true
+        },
+        "subtitle": {
+          "max": 140
+        },
+        "meta": {
+          "max": 60
+        }
+      }
+    },
+    "agenda": {
+      "name": "Agenda",
+      "group": "Structure",
+      "kind": "content",
+      "use": "List of the deck's main parts, near the start.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 40,
+          "required": true
+        },
+        "subtitle": {
+          "max": 110
+        },
+        "items": {
+          "min": 3,
+          "max": 6,
+          "fields": {
+            "title": {
+              "max": 40
+            },
+            "text": {
+              "max": 70
+            }
+          }
+        }
+      }
+    },
+    "section-divider": {
+      "name": "Section divider",
+      "group": "Structure",
+      "kind": "hero",
+      "use": "Opens a new part of a long deck (10+ slides). Use sparingly.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 48,
+          "required": true
+        },
+        "subtitle": {
+          "max": 120
+        },
+        "meta": {
+          "max": 4
+        }
+      }
+    },
+    "big-statement": {
+      "name": "Big statement",
+      "group": "Statement",
+      "kind": "hero",
+      "use": "One powerful sentence: a thesis, vision, key insight or provocative question.",
+      "fields": {
+        "eyebrow": {
+          "max": 28
+        },
+        "title": {
+          "max": 120,
+          "required": true
+        },
+        "highlight": {
+          "max": 40
+        },
+        "subtitle": {
+          "max": 120
+        }
+      }
+    },
+    "title-bullets": {
+      "name": "Title + bullets",
+      "group": "Text",
+      "kind": "content",
+      "use": "Plain explanatory points when nothing more visual fits. Avoid overusing.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 140
+        },
+        "bullets": {
+          "min": 3,
+          "max": 6,
+          "itemMax": 110
+        }
+      }
+    },
+    "stats-big-numbers": {
+      "name": "Big numbers",
+      "group": "Data",
+      "kind": "content",
+      "use": "2-4 headline figures (market size, growth, users, percentages).",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 130
+        },
+        "items": {
+          "min": 2,
+          "max": 4,
+          "fields": {
+            "value": {
+              "max": 8
+            },
+            "label": {
+              "max": 30
+            },
+            "text": {
+              "max": 90
+            }
+          }
+        }
+      }
+    },
+    "kpi-cards": {
+      "name": "KPI cards",
+      "group": "Data",
+      "kind": "content",
+      "use": "3-4 metrics with change vs. a previous period (business reviews, dashboards).",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 130
+        },
+        "items": {
+          "min": 3,
+          "max": 4,
+          "fields": {
+            "icon": {},
+            "value": {
+              "max": 9
+            },
+            "label": {
+              "max": 28
+            },
+            "delta": {
+              "max": 8
+            },
+            "text": {
+              "max": 60
+            }
+          }
+        }
+      },
+      "roles": "value = the metric, label = metric name, delta = change vs last period with sign."
+    },
+    "icon-grid-3": {
+      "name": "Icon features · 3",
+      "group": "Features",
+      "kind": "content",
+      "use": "Three parallel ideas, pillars, features or benefits.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 130
+        },
+        "items": {
+          "min": 3,
+          "max": 3,
+          "fields": {
+            "icon": {},
+            "title": {
+              "max": 30
+            },
+            "text": {
+              "max": 120
+            }
+          }
+        }
+      }
+    },
+    "icon-grid-4": {
+      "name": "Icon features · 4",
+      "group": "Features",
+      "kind": "content",
+      "use": "Four parallel ideas, features or benefits.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 130
+        },
+        "items": {
+          "min": 4,
+          "max": 4,
+          "fields": {
+            "icon": {},
+            "title": {
+              "max": 26
+            },
+            "text": {
+              "max": 95
+            }
+          }
+        }
+      }
+    },
+    "icon-grid-6": {
+      "name": "Icon features · 6",
+      "group": "Features",
+      "kind": "content",
+      "use": "Six short capabilities, features or facts.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "items": {
+          "min": 6,
+          "max": 6,
+          "fields": {
+            "icon": {},
+            "title": {
+              "max": 26
+            },
+            "text": {
+              "max": 80
+            }
+          }
+        }
+      }
+    },
+    "image-text-left": {
+      "name": "Image left + text",
+      "group": "Image",
+      "kind": "content",
+      "use": "A concept explained with an evocative photo or illustration on the left.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "body": {
+          "max": 220
+        },
+        "bullets": {
+          "min": 0,
+          "max": 4,
+          "itemMax": 70
+        },
+        "image": {}
+      }
+    },
+    "image-text-right": {
+      "name": "Text + image right",
+      "group": "Image",
+      "kind": "content",
+      "use": "A concept explained with an evocative photo or illustration on the right.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "body": {
+          "max": 220
+        },
+        "bullets": {
+          "min": 0,
+          "max": 4,
+          "itemMax": 70
+        },
+        "image": {}
+      }
+    },
+    "full-bleed-image": {
+      "name": "Full-bleed image",
+      "group": "Image",
+      "kind": "hero",
+      "use": "Emotional or inspirational moment carried by one big photo with a short headline.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 64,
+          "required": true
+        },
+        "subtitle": {
+          "max": 130
+        },
+        "image": {}
+      }
+    },
+    "timeline": {
+      "name": "Timeline / roadmap",
+      "group": "Flow",
+      "kind": "content",
+      "use": "Milestones in time: history, roadmap, phases with dates.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "items": {
+          "min": 3,
+          "max": 6,
+          "fields": {
+            "value": {
+              "max": 12
+            },
+            "title": {
+              "max": 26
+            },
+            "text": {
+              "max": 70
+            }
+          }
+        }
+      },
+      "roles": "items in chronological order; value is the date or period."
+    },
+    "process-steps": {
+      "name": "Process steps",
+      "group": "Flow",
+      "kind": "content",
+      "use": "A sequence of 3-5 steps: how it works, method, workflow.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 120
+        },
+        "items": {
+          "min": 3,
+          "max": 5,
+          "fields": {
+            "icon": {},
+            "title": {
+              "max": 24
+            },
+            "text": {
+              "max": 80
+            }
+          }
+        }
+      },
+      "roles": "items in the order they happen."
+    },
+    "comparison": {
+      "name": "Comparison · 2 columns",
+      "group": "Compare",
+      "kind": "content",
+      "use": "Two options, approaches or eras side by side. The second column is emphasised.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "items": {
+          "min": 2,
+          "max": 2,
+          "fields": {
+            "icon": {},
+            "title": {
+              "max": 28
+            },
+            "text": {
+              "max": 80
+            },
+            "bullets": {
+              "min": 2,
+              "max": 4,
+              "itemMax": 60
+            }
+          }
+        }
+      },
+      "roles": "items[0] = the old / alternative option, items[1] = the recommended option (it is visually emphasised)."
+    },
+    "before-after": {
+      "name": "Before / after",
+      "group": "Compare",
+      "kind": "content",
+      "use": "Transformation: the old way vs. the new way.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "items": {
+          "min": 2,
+          "max": 2,
+          "fields": {
+            "title": {
+              "max": 24
+            },
+            "bullets": {
+              "min": 2,
+              "max": 4,
+              "itemMax": 60
+            }
+          }
+        }
+      },
+      "roles": "items[0] = BEFORE (the old state), items[1] = AFTER (the improved state)."
+    },
+    "pros-cons": {
+      "name": "Pros / cons",
+      "group": "Compare",
+      "kind": "content",
+      "use": "Advantages and disadvantages, opportunities and risks.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "items": {
+          "min": 2,
+          "max": 2,
+          "fields": {
+            "title": {
+              "max": 24
+            },
+            "bullets": {
+              "min": 2,
+              "max": 5,
+              "itemMax": 64
+            }
+          }
+        }
+      },
+      "roles": "items[0] = advantages / opportunities, items[1] = disadvantages / risks."
+    },
+    "chart-insight": {
+      "name": "Chart + insight",
+      "group": "Data",
+      "kind": "content",
+      "use": "A chart with the takeaway called out beside it. Use when numbers tell the story.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "chart": {
+          "maxCategories": 8,
+          "maxSeries": 3
+        },
+        "items": {
+          "min": 1,
+          "max": 3,
+          "fields": {
+            "value": {
+              "max": 8
+            },
+            "text": {
+              "max": 80
+            }
+          }
+        }
+      }
+    },
+    "chart-full": {
+      "name": "Chart · full width",
+      "group": "Data",
+      "kind": "content",
+      "use": "A wide chart (trends over time, many categories) with a one-line takeaway.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 120
+        },
+        "chart": {
+          "maxCategories": 12,
+          "maxSeries": 4
+        }
+      }
+    },
+    "table": {
+      "name": "Table",
+      "group": "Data",
+      "kind": "content",
+      "use": "Structured facts in rows and columns: feature matrix, specs, schedule.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 60,
+          "required": true
+        },
+        "subtitle": {
+          "max": 120
+        },
+        "table": {
+          "maxCols": 5,
+          "maxRows": 6,
+          "cellMax": 40
+        }
+      }
+    },
+    "quote": {
+      "name": "Quote",
+      "group": "Statement",
+      "kind": "hero",
+      "use": "One memorable quotation from a known person or customer.",
+      "fields": {
+        "quote": {
+          "max": 180,
+          "required": true
+        },
+        "author": {
+          "max": 40
+        },
+        "role": {
+          "max": 50
+        }
+      }
+    },
+    "testimonials": {
+      "name": "Testimonials",
+      "group": "People",
+      "kind": "content",
+      "use": "2-3 short customer or user quotes.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "items": {
+          "min": 2,
+          "max": 3,
+          "fields": {
+            "text": {
+              "max": 150
+            },
+            "title": {
+              "max": 28
+            },
+            "label": {
+              "max": 36
+            }
+          }
+        }
+      },
+      "roles": "items: text = the quote, title = person name, label = role and place."
+    },
+    "team-grid": {
+      "name": "Team",
+      "group": "People",
+      "kind": "content",
+      "use": "People: founders, team, speakers, advisors.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "subtitle": {
+          "max": 120
+        },
+        "items": {
+          "min": 3,
+          "max": 6,
+          "fields": {
+            "title": {
+              "max": 28
+            },
+            "label": {
+              "max": 32
+            },
+            "text": {
+              "max": 70
+            }
+          }
+        }
+      },
+      "roles": "items are people: title = full name, label = role, text = one-line credential."
+    },
+    "pricing-tiers": {
+      "name": "Pricing tiers",
+      "group": "Business",
+      "kind": "content",
+      "use": "2-3 plans or packages with price and features. Middle tier highlighted.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "items": {
+          "min": 2,
+          "max": 3,
+          "fields": {
+            "title": {
+              "max": 20
+            },
+            "value": {
+              "max": 9
+            },
+            "label": {
+              "max": 16
+            },
+            "text": {
+              "max": 60
+            },
+            "bullets": {
+              "min": 2,
+              "max": 4,
+              "itemMax": 40
+            },
+            "highlight": {}
+          }
+        }
+      },
+      "roles": "items from cheapest to most expensive; mark the recommended one with highlight=true."
+    },
+    "problem-solution": {
+      "name": "Problem / solution",
+      "group": "Business",
+      "kind": "content",
+      "use": "The pain point and how it is solved. Classic for pitches.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "items": {
+          "min": 2,
+          "max": 2,
+          "fields": {
+            "icon": {},
+            "title": {
+              "max": 28
+            },
+            "text": {
+              "max": 130
+            },
+            "bullets": {
+              "min": 0,
+              "max": 3,
+              "itemMax": 60
+            }
+          }
+        }
+      },
+      "roles": "items[0] = THE PROBLEM (pain point; title like \"The problem\"), items[1] = THE SOLUTION (your answer; title like \"Our solution\")."
+    },
+    "market-size": {
+      "name": "Market size · TAM SAM SOM",
+      "group": "Business",
+      "kind": "content",
+      "use": "Total, serviceable and obtainable market (pitch decks).",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "items": {
+          "min": 3,
+          "max": 3,
+          "fields": {
+            "label": {
+              "max": 6
+            },
+            "value": {
+              "max": 8
+            },
+            "title": {
+              "max": 32
+            },
+            "text": {
+              "max": 80
+            }
+          }
+        }
+      },
+      "roles": "items in order TAM, SAM, SOM (label exactly \"TAM\", \"SAM\", \"SOM\"); values decrease."
+    },
+    "swot": {
+      "name": "SWOT",
+      "group": "Business",
+      "kind": "content",
+      "use": "Strengths, weaknesses, opportunities, threats.",
+      "fields": {
+        "eyebrow": {
+          "max": 24
+        },
+        "title": {
+          "max": 56,
+          "required": true
+        },
+        "items": {
+          "min": 4,
+          "max": 4,
+          "fields": {
+            "title": {
+              "max": 18
+            },
+            "bullets": {
+              "min": 2,
+              "max": 3,
+              "itemMax": 52
+            }
+          }
+        }
+      },
+      "roles": "items in order: Strengths, Weaknesses, Opportunities, Threats (titles exactly these words)."
+    },
+    "closing": {
+      "name": "Closing / contact",
+      "group": "Cover",
+      "kind": "hero",
+      "use": "Final slide: thank you, call to action, contact details.",
+      "fields": {
+        "eyebrow": {
+          "max": 28
+        },
+        "title": {
+          "max": 40,
+          "required": true
+        },
+        "subtitle": {
+          "max": 120
+        },
+        "items": {
+          "min": 0,
+          "max": 3,
+          "fields": {
+            "icon": {},
+            "text": {
+              "max": 36
+            }
+          }
+        }
+      },
+      "roles": "items are contact details (email, website, phone or social handle) with fitting icons; may be empty."
+    }
+  }
+}

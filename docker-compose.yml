@@ -1,0 +1,29 @@
+# Production-style stack: nginx (frontend + reverse proxy) -> FastAPI (backend).
+#   GCP_KEY_FILE=D:\path\to\key.json docker compose up --build      ->  http://localhost:8080
+# The backend reads backend/.env; values below override what must differ inside containers.
+services:
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /secrets/gcp-key.json
+      FRONTEND_URL: http://frontend          # headless Chromium prints /print/{id} through nginx
+      CORS_ORIGINS: http://localhost:8080
+      DATA_DIR: /data
+    volumes:
+      - aira-data:/data
+      - ${GCP_KEY_FILE:-./backend/gcp-key.json}:/secrets/gcp-key.json:ro
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    environment:
+      BACKEND_URL: http://backend:8000
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  aira-data:

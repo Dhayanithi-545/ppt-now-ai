@@ -1,0 +1,96 @@
+/* ==========================================================================
+   App chrome tokens: "Monochrome Gallery" — paper, ink, one cobalt accent.
+   Light by default; dark via OS preference or [data-app-theme='dark'].
+   (Slides have their own design system in slides/slide.css.)
+   ========================================================================== */
+:root {
+  --font-serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --app-bg: #f7f6f2;
+  --app-panel: rgba(255, 255, 255, .86);
+  --app-panel-solid: #ffffff;
+  --app-sunken: #efede7;
+  --app-hover: #f1efe9;
+  --app-text: #121212;
+  --app-muted: #66655f;
+  --app-faint: #9a9890;
+  --app-border: #e3e1da;
+  --app-border-strong: #cdcac1;
+  --app-ink: #121212;          /* primary buttons */
+  --app-on-ink: #ffffff;
+  --app-accent: #2b4bff;       /* cobalt */
+  --app-accent-soft: rgba(43, 75, 255, .12);
+  --app-danger: #c0392b;
+  --app-warn: #b45309;
+  --app-success: #1f7a4d;
+  --app-shadow: 0 1px 2px rgba(18, 18, 18, .05), 0 12px 32px -16px rgba(18, 18, 18, .22);
+  --app-shadow-lg: 0 30px 80px -24px rgba(18, 18, 18, .35);
+  --app-radius: 14px;
+  --app-radius-sm: 10px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-app-theme='light']) {
+    --app-bg: #0e0e0d;
+    --app-panel: rgba(24, 24, 23, .86);
+    --app-panel-solid: #171716;
+    --app-sunken: #121211;
+    --app-hover: #1f1f1d;
+    --app-text: #f2f1ec;
+    --app-muted: #a3a19a;
+    --app-faint: #6f6e69;
+    --app-border: #292927;
+    --app-border-strong: #3a3a37;
+    --app-ink: #f2f1ec;
+    --app-on-ink: #111111;
+    --app-accent: #8c9dff;
+    --app-accent-soft: rgba(140, 157, 255, .16);
+    --app-danger: #f27a6b;
+    --app-warn: #f0a44b;
+    --app-success: #5fcf95;
+    --app-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 16px 40px -18px rgba(0, 0, 0, .7);
+    --app-shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, .8);
+    color-scheme: dark;
+  }
+}
+
+:root[data-app-theme='dark'] {
+  --app-bg: #0e0e0d;
+  --app-panel: rgba(24, 24, 23, .86);
+  --app-panel-solid: #171716;
+  --app-sunken: #121211;
+  --app-hover: #1f1f1d;
+  --app-text: #f2f1ec;
+  --app-muted: #a3a19a;
+  --app-faint: #6f6e69;
+  --app-border: #292927;
+  --app-border-strong: #3a3a37;
+  --app-ink: #f2f1ec;
+  --app-on-ink: #111111;
+  --app-accent: #8c9dff;
+  --app-accent-soft: rgba(140, 157, 255, .16);
+  --app-danger: #f27a6b;
+  --app-warn: #f0a44b;
+  --app-success: #5fcf95;
+  --app-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 16px 40px -18px rgba(0, 0, 0, .7);
+  --app-shadow-lg: 0 30px 80px -20px rgba(0, 0, 0, .8);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--app-bg);
+  color: var(--app-text);
+  font: 15px/1.55 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color .2s, color .2s;
+}
+button, input, select, textarea { font-family: inherit; color: inherit; }
+a { color: var(--app-accent); }
+::selection { background: var(--app-accent-soft); }
+:focus-visible { outline: 2px solid var(--app-accent); outline-offset: 2px; }

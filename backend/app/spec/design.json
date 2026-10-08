@@ -1,0 +1,354 @@
+{
+  "fonts": {
+    "Inter": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Sora": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Plus Jakarta Sans": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Manrope": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Space Grotesk": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "DM Sans": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Outfit": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Work Sans": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Nunito": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "IBM Plex Sans": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Bricolage Grotesque": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Syne": {
+      "kind": "sans",
+      "fallback": "Arial"
+    },
+    "Archivo Black": {
+      "kind": "sans",
+      "fallback": "Arial Black"
+    },
+    "Fraunces": {
+      "kind": "serif",
+      "fallback": "Georgia"
+    },
+    "Playfair Display": {
+      "kind": "serif",
+      "fallback": "Georgia"
+    },
+    "Cormorant Garamond": {
+      "kind": "serif",
+      "fallback": "Garamond"
+    },
+    "DM Serif Display": {
+      "kind": "serif",
+      "fallback": "Georgia"
+    },
+    "Instrument Serif": {
+      "kind": "serif",
+      "fallback": "Georgia"
+    },
+    "Lora": {
+      "kind": "serif",
+      "fallback": "Georgia"
+    },
+    "JetBrains Mono": {
+      "kind": "mono",
+      "fallback": "Consolas"
+    }
+  },
+  "backgroundStyles": [
+    "mesh",
+    "blobs",
+    "grain",
+    "geometric",
+    "photo",
+    "solid"
+  ],
+  "motifs": [
+    "none",
+    "orbs",
+    "grid",
+    "dots",
+    "rings",
+    "brackets",
+    "stripes",
+    "frame",
+    "waves",
+    "confetti",
+    "rules"
+  ],
+  "cardStyles": [
+    "filled",
+    "outline",
+    "glass",
+    "elevated",
+    "brutal"
+  ],
+  "eyebrowStyles": [
+    "pill",
+    "line",
+    "number",
+    "plain",
+    "mono"
+  ],
+  "shadowStyles": [
+    "none",
+    "soft",
+    "hard",
+    "glow"
+  ],
+  "imageTreatments": [
+    "rounded",
+    "square",
+    "arch",
+    "blob",
+    "duotone",
+    "slant"
+  ],
+  "heroFills": [
+    "none",
+    "primary",
+    "secondary",
+    "accent",
+    "gradient"
+  ],
+  "icons": [
+    "sparkles",
+    "rocket",
+    "target",
+    "trending-up",
+    "trending-down",
+    "chart-column",
+    "chart-bar",
+    "chart-line",
+    "chart-pie",
+    "users",
+    "user",
+    "user-round",
+    "brain",
+    "cpu",
+    "shield",
+    "shield-check",
+    "lock",
+    "zap",
+    "lightbulb",
+    "globe",
+    "leaf",
+    "heart",
+    "heart-pulse",
+    "dumbbell",
+    "activity",
+    "clock",
+    "calendar",
+    "check",
+    "circle-check",
+    "x",
+    "circle-x",
+    "star",
+    "award",
+    "trophy",
+    "dollar-sign",
+    "wallet",
+    "credit-card",
+    "piggy-bank",
+    "briefcase",
+    "building-2",
+    "store",
+    "shopping-cart",
+    "package",
+    "truck",
+    "factory",
+    "cloud",
+    "database",
+    "server",
+    "code",
+    "layers",
+    "layout-grid",
+    "puzzle",
+    "settings",
+    "wrench",
+    "hammer",
+    "message-circle",
+    "mail",
+    "phone",
+    "map-pin",
+    "compass",
+    "flag",
+    "gift",
+    "graduation-cap",
+    "book-open",
+    "book",
+    "atom",
+    "flask-conical",
+    "microscope",
+    "telescope",
+    "smartphone",
+    "monitor",
+    "wifi",
+    "bot",
+    "sun",
+    "moon",
+    "flame",
+    "droplet",
+    "mountain",
+    "trees",
+    "recycle",
+    "handshake",
+    "megaphone",
+    "search",
+    "eye",
+    "filter",
+    "infinity",
+    "gauge",
+    "hourglass",
+    "key",
+    "link",
+    "scale",
+    "sliders-horizontal",
+    "timer",
+    "workflow",
+    "git-branch",
+    "network",
+    "circuit-board",
+    "battery-charging",
+    "plug",
+    "apple",
+    "utensils",
+    "music",
+    "camera",
+    "image",
+    "film",
+    "palette",
+    "pen-tool",
+    "feather",
+    "arrow-right",
+    "arrow-up-right",
+    "quote",
+    "triangle-alert",
+    "badge-check",
+    "life-buoy",
+    "umbrella",
+    "stethoscope",
+    "pill",
+    "hospital",
+    "car",
+    "plane",
+    "ship",
+    "bike",
+    "banknote",
+    "receipt",
+    "percent",
+    "calculator",
+    "presentation",
+    "file-text",
+    "clipboard-check",
+    "list-checks",
+    "crown",
+    "gem",
+    "medal",
+    "hand-heart",
+    "smile",
+    "thumbs-up",
+    "school",
+    "landmark"
+  ],
+  "builtinThemes": [
+    {
+      "id": "midnight",
+      "name": "Midnight Gradient",
+      "description": "Deep navy with violet–cyan aurora glow and glass cards.",
+      "mode": "dark"
+    },
+    {
+      "id": "swiss",
+      "name": "Clean Swiss",
+      "description": "International typographic style: white, black, signal red, strict grid.",
+      "mode": "light"
+    },
+    {
+      "id": "editorial",
+      "name": "Warm Editorial",
+      "description": "Magazine layout on warm paper: serif display, terracotta and forest green.",
+      "mode": "light"
+    },
+    {
+      "id": "neon",
+      "name": "Neon Tech",
+      "description": "Terminal-black with neon green and cyan, grid horizon and mono details.",
+      "mode": "dark"
+    },
+    {
+      "id": "pastel",
+      "name": "Pastel Startup",
+      "description": "Airy lavender canvas, soft candy blobs and friendly rounded cards.",
+      "mode": "light"
+    },
+    {
+      "id": "luxury",
+      "name": "Luxury Dark Gold",
+      "description": "Black lacquer, champagne gold hairlines and high-contrast serif.",
+      "mode": "dark"
+    },
+    {
+      "id": "earth",
+      "name": "Nature / Earth",
+      "description": "Sage paper, forest and clay tones, organic shapes and topographic lines.",
+      "mode": "light"
+    },
+    {
+      "id": "brutalist",
+      "name": "Bold Brutalist",
+      "description": "Raw paper, heavy black type, hard offset shadows and safety orange.",
+      "mode": "light"
+    },
+    {
+      "id": "corporate",
+      "name": "Corporate Blue Pro",
+      "description": "Confident blue, crisp white, diagonal geometry. Boardroom-ready.",
+      "mode": "light"
+    },
+    {
+      "id": "playful",
+      "name": "Playful Bright",
+      "description": "Sunny cream with coral, teal and yellow stickers and chunky rounded type.",
+      "mode": "light"
+    },
+    {
+      "id": "sunset",
+      "name": "Sunset Glow",
+      "description": "Warm dusk gradient from plum to tangerine, elegant serif and glass panels.",
+      "mode": "dark"
+    },
+    {
+      "id": "mono",
+      "name": "Monochrome Gallery",
+      "description": "Gallery-white, ink black and one cobalt accent. Quiet, confident, editorial.",
+      "mode": "light"
+    }
+  ]
+}

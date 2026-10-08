@@ -1,0 +1,6 @@
+# Test + QA tooling. Install into the backend virtualenv:
+#   backend\.venv\Scripts\pip install -r backend\requirements.txt -r tests\requirements.txt
+pytest>=8
+python-pptx>=1.0.2   # inspect exported .pptx files
+pillow>=10           # screenshot contact sheets / comparisons
+pymupdf>=1.24        # rasterize exported PDFs for comparison

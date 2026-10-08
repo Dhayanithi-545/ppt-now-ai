@@ -1,0 +1,7 @@
+.venv
+data
+.env
+*.json
+!app/spec/*.json
+__pycache__
+*.pyc

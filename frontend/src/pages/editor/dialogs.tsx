@@ -165,7 +165,7 @@ export function ThemePopover({ current, onPick, onClose }: { current: string; on
   async function make() {
     setBusy(true)
     try {
-      const { theme } = await api.themeFromPrompt(prompt)
+      const { theme } = await api.themeFromPrompt(prompt.trim())
       custom.add(theme)
       onPick(theme)
     } catch (e) {
@@ -178,7 +178,7 @@ export function ThemePopover({ current, onPick, onClose }: { current: string; on
   return (
     <div className="pop theme-pop" ref={ref}>
       <div className="pop-row">
-        <input className="input" aria-label="Describe a custom style" placeholder="Describe a custom style…" value={prompt} onChange={(e) => setPrompt(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && prompt.trim().length > 2 && make()} />
+        <input className="input" aria-label="Describe a custom style" placeholder="Describe a custom style…" value={prompt} maxLength={500} onChange={(e) => setPrompt(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && prompt.trim().length > 2 && make()} />
         <button className="btn" onClick={make} disabled={busy || prompt.trim().length < 3}>
           {busy ? <Spinner /> : <Wand2 size={15} />} Create
         </button>

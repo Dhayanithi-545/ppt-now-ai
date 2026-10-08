@@ -33,7 +33,13 @@ async function req<T>(method: string, url: string, body?: unknown): Promise<T> {
     let msg = r.statusText
     try {
       const j = await r.json()
-      msg = typeof j.detail === 'string' ? j.detail : JSON.stringify(j.detail ?? j)
+      // FastAPI validation errors arrive as a list of {loc, msg}; show the messages, not raw JSON.
+      msg =
+        typeof j.detail === 'string'
+          ? j.detail
+          : Array.isArray(j.detail)
+            ? j.detail.map((d: { msg?: string }) => d.msg).filter(Boolean).join('; ')
+            : JSON.stringify(j.detail ?? j)
     } catch {
       /* not json */
     }

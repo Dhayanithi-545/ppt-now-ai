@@ -76,7 +76,7 @@ export default function Home() {
     if (stylePrompt.trim().length < 3) return
     setBusy('Designing your theme…')
     try {
-      const { theme: t, fixes } = await api.themeFromPrompt(stylePrompt)
+      const { theme: t, fixes } = await api.themeFromPrompt(stylePrompt.trim())
       custom.add(t)
       setThemeId(t.id)
       toast(fixes.length ? `Theme created (${fixes.length} contrast fix${fixes.length > 1 ? 'es' : ''} applied)` : 'Theme created')
@@ -303,6 +303,7 @@ export default function Home() {
                 aria-label="Describe your own style"
                 placeholder='Describe your own style, e.g. "dark luxury with gold accents, editorial feel"'
                 value={stylePrompt}
+                maxLength={500}
                 onChange={(e) => setStylePrompt(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && makeTheme()}
               />

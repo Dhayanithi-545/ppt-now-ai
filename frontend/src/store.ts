@@ -32,6 +32,7 @@ interface EditorState {
   editField: (index: number, path: string, value: string) => void
   setSlide: (index: number, slide: Slide, history?: boolean) => void
   changeLayout: (index: number, layout: LayoutId) => void
+  changeVariant: (index: number, variant: string) => void
   duplicate: (index: number) => void
   remove: (index: number) => void
   move: (from: number, to: number) => void
@@ -110,7 +111,14 @@ export const useEditor = create<EditorState>((set, get) => ({
     const deck = get().deck
     if (!deck) return
     const s = deck.slides[index]
-    get().setSlide(index, { ...s, layout, content: remapContent(s.content, layout) })
+    // The old arrangement belongs to the old layout; the new one starts from its default.
+    get().setSlide(index, { ...s, layout, variant: undefined, content: remapContent(s.content, layout) })
+  },
+
+  changeVariant: (index, variant) => {
+    const deck = get().deck
+    if (!deck) return
+    get().setSlide(index, { ...deck.slides[index], variant })
   },
 
   duplicate: (index) => {

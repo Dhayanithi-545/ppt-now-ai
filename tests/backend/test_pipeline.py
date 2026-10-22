@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from app.services import pipeline
+from app.services import layouts, pipeline
 from app.services.layouts import LayoutId, slide_schema
 from app.schemas import EditPlan, OutlineItem, OutlineLLM
 
@@ -60,6 +60,26 @@ def test_fix_outline_enforces_cover_closing_and_variety():
     for a, b, c in zip(fixed, fixed[1:], fixed[2:]):
         assert not (a == b == c), fixed
     assert "cover-hero" not in fixed[1:-1]
+
+
+def test_fix_outline_keeps_valid_arrangements_and_varies_neighbours():
+    items = [item("cover-hero")] + [item("title-bullets", f"s{i}") for i in range(3)] + [item("closing")]
+    items[0].variant = "bottom"
+    items[1].variant = "nonsense"
+    fixed = pipeline.fix_outline(items, 5)
+    assert fixed[0].variant == "bottom"
+    ids = {v["id"] for v in layouts.variants("title-bullets")}
+    assert all(i.variant in ids for i in fixed[1:4])
+    pos = [layouts.variant_pos(i.layout.value, i.variant) for i in fixed]
+    for a, b in zip(pos, pos[1:]):
+        assert a != b, pos
+
+
+def test_fix_outline_drops_arrangement_when_layout_is_replaced():
+    items = [item("table"), item("cover-hero"), item("closing")]
+    items[0].variant = "center"
+    fixed = pipeline.fix_outline(items, 3)
+    assert fixed[0].layout.value == "cover-hero" and fixed[0].variant in {v["id"] for v in layouts.variants("cover-hero")}
 
 
 def test_fix_outline_drops_dividers_in_short_decks_and_trims_count():
@@ -157,3 +177,34 @@ def test_chat_edit_applies_structural_operations(monkeypatch):
     assert out["slides"][2]["layout"] == "pros-cons"
     assert out["themeId"] == "swiss" and out["title"] == "New name"
     assert reply == "Done" and "theme" in changed
+
+
+def test_chat_edit_rearrange_moves_things_without_rewriting(monkeypatch):
+    deck = {
+        "id": "d", "title": "Deck", "themeId": "midnight",
+        "slides": [{"id": "s0", "layout": "title-bullets", "variant": "list", "content": {"title": "S0", "bullets": ["a", "b", "c"]}, "notes": ""}],
+        "outline": [{"title": "S0", "layout": "title-bullets", "intent": ""}],
+    }
+    plan = EditPlan.model_validate({"reply": "Moved", "operations": [{"op": "rearrange", "slide": 1, "variant": "split"}]})
+
+    async def fake_plan(*a, **kw):
+        return plan
+
+    async def no_rewrite(*a, **kw):
+        raise AssertionError("rearrange must not regenerate the slide")
+
+    monkeypatch.setattr(pipeline, "generate_json", fake_plan)
+    monkeypatch.setattr(pipeline, "generate_slide", no_rewrite)
+    out, _, changed = run(pipeline.chat_edit(deck, "put the title on the side", 0))
+    assert out["slides"][0]["variant"] == "split" and out["slides"][0]["content"]["title"] == "S0"
+    assert changed == ["s0"]
+
+
+def test_generate_slide_returns_arrangement(monkeypatch):
+    async def fake(prompt, schema, system, **kw):
+        assert "Arrangement:" in prompt
+        return FakeResponse({"eyebrow": "E", "title": "A", "items": [{"icon": "rocket", "title": "x", "text": "y"}] * 3, "notes": "n"})
+
+    monkeypatch.setattr(pipeline, "generate_json", fake)
+    s = run(pipeline.generate_slide(DECK, 0, {"title": "A", "layout": "icon-grid-3", "variant": "open", "intent": ""}))
+    assert s["variant"] == "open"

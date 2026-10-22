@@ -34,6 +34,7 @@ class QA(BaseModel):
 class OutlineItem(BaseModel):
     title: str
     layout: LayoutId
+    variant: str | None = None
     intent: str = ""
 
 
@@ -92,6 +93,8 @@ class ClarifyResult(BaseModel):
 class OutlineSlideLLM(BaseModel):
     title: str = Field(description="Slide title, max ~8 words")
     layout: LayoutId
+    # Defaulted so an omitted arrangement never fails the outline; fix_outline fills it in.
+    variant: str = Field("", description="Arrangement id for this layout, from the layout's arrangement list")
     intent: str = Field(description="One line: what this slide must communicate")
 
 
@@ -108,6 +111,7 @@ class EditOp(str, Enum):
     update_all = "update_all"
     set_theme = "set_theme"
     rename_deck = "rename_deck"
+    rearrange = "rearrange"
 
 
 class EditOperation(BaseModel):
@@ -115,6 +119,7 @@ class EditOperation(BaseModel):
     slide: int | None = Field(None, description="1-based slide number the op applies to (insert: insert AFTER this slide; 0 = at start)")
     to: int | None = Field(None, description="move_slide: 1-based target position")
     layout: LayoutId | None = Field(None, description="Layout for insert_slide, or a new layout for update_slide")
+    variant: str | None = Field(None, description="Arrangement id: rearrange, or with insert_slide / update_slide")
     title: str | None = Field(None, description="Title for insert_slide / rename_deck")
     instruction: str | None = Field(None, description="What to change or write (update_slide, insert_slide, update_all)")
     theme_id: ThemeId | None = Field(None, description="set_theme only")

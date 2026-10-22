@@ -4,6 +4,8 @@ import type { Slide, SlideContent, Theme } from '../design/types'
 export interface SlideCtxValue {
   slide: Slide
   content: SlideContent
+  /** Resolved arrangement id (never empty). */
+  variant: string
   theme: Theme
   index: number
   total: number

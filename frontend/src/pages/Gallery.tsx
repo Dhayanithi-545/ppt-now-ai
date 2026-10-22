@@ -3,16 +3,21 @@ import { download } from '../api'
 import { buildPptx } from '../export/pptx'
 import { useSearchParams } from 'react-router-dom'
 import { THEMES, getTheme } from '../design/themes'
-import { LAYOUT_IDS, LAYOUT_SPEC, type LayoutId, type Slide } from '../design/types'
+import { LAYOUT_IDS, LAYOUT_SPEC, variantsOf, type LayoutId, type Slide } from '../design/types'
 import { SAMPLES } from '../slides/samples'
 import { SlideCanvas } from '../slides/SlideCanvas'
 import { SlideView } from '../slides/SlideView'
 import './gallery.css'
 
-function sampleSlide(layout: LayoutId, photos: boolean): Slide {
+function sampleSlide(layout: LayoutId, photos: boolean, variant?: string): Slide {
   const content = structuredClone(SAMPLES[layout])
   if (!photos && content.image) delete content.image.url
-  return { id: `sample-${layout}`, layout, content }
+  return { id: variant ? `sample-${layout}--${variant}` : `sample-${layout}`, layout, variant, content }
+}
+
+/** Every arrangement of each layout (or just the default ones). */
+function sampleSlides(layouts: LayoutId[], photos: boolean, all: boolean): Slide[] {
+  return layouts.flatMap((l) => (all ? variantsOf(l).map((v) => sampleSlide(l, photos, v.id)) : [sampleSlide(l, photos)]))
 }
 
 const DECK_TITLE = 'Pulse · Seed deck'
@@ -24,9 +29,10 @@ export default function Gallery() {
   const photos = params.get('photos') !== '0'
   const native = params.get('native') === '1'
   const only = params.get('layout') as LayoutId | null
+  // Native mode keeps one slide per layout (tests address them by layout) unless variants=1.
+  const allVariants = native ? params.get('variants') === '1' : params.get('variants') !== '0'
   const theme = getTheme(themeId)
-  const layouts = only ? [only] : LAYOUT_IDS
-  const slides = useMemo(() => layouts.map((l) => sampleSlide(l, photos)), [layouts, photos])
+  const slides = useMemo(() => sampleSlides(only ? [only] : LAYOUT_IDS, photos, allVariants), [only, photos, allVariants])
   const [exporting, setExporting] = useState(false)
 
   const set = (k: string, v: string) => {
@@ -55,7 +61,7 @@ export default function Gallery() {
           export
         </button>
         {slides.map((s, i) => (
-          <div key={s.id} id={`slide-${s.layout}`} className="gal-native-slide" data-layout={s.layout}>
+          <div key={s.id} id={s.variant ? `slide-${s.layout}--${s.variant}` : `slide-${s.layout}`} className="gal-native-slide" data-layout={s.layout}>
             <SlideView slide={s} theme={theme} index={i} total={slides.length} deckTitle={DECK_TITLE} print />
           </div>
         ))}
@@ -70,7 +76,7 @@ export default function Gallery() {
           <a href="/" aria-label="Aira home"><img className="gal-logo" src="/logo.png" alt="" /></a>
           <div>
             <div className="gal-title">Design system</div>
-            <div className="gal-sub">{THEMES.length} themes × {LAYOUT_IDS.length} layouts</div>
+            <div className="gal-sub">{THEMES.length} themes × {LAYOUT_IDS.length} layouts × {slides.length} arrangements</div>
           </div>
         </div>
         <div className="gal-tabs">
@@ -99,8 +105,8 @@ export default function Gallery() {
               <figure key={s.id} className="gal-item">
                 <SlideCanvas slide={s} theme={theme} index={i} total={slides.length} deckTitle={DECK_TITLE} className="gal-canvas" />
                 <figcaption>
-                  <b>{LAYOUT_SPEC[s.layout].name}</b>
-                  <span>{s.layout}</span>
+                  <b>{LAYOUT_SPEC[s.layout].name}{s.variant && ` · ${variantsOf(s.layout).find((v) => v.id === s.variant)?.name}`}</b>
+                  <span>{s.variant ? `${s.layout} / ${s.variant}` : s.layout}</span>
                 </figcaption>
               </figure>
             ))}

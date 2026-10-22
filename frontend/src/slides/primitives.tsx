@@ -114,15 +114,17 @@ export function Header({ subtitle = true, center, className }: { subtitle?: bool
   )
 }
 
-export function Bullets({ p = 'bullets', className, marker }: { p?: string; className?: string; marker?: 'check' | 'x' | 'dot' }) {
+export function Bullets({ p = 'bullets', className, itemClassName, marker }: { p?: string; className?: string; itemClassName?: string; marker?: 'check' | 'x' | 'dot' | 'number' }) {
   const { content, editable } = useSlide()
   const list = (getPath(content, p) as string[] | undefined) ?? []
   if (!list.length && !editable) return null
   return (
-    <ul className={cx('bul', marker && `bul-${marker}`, className)}>
+    <ul className={cx('bul', marker && `bul-${marker}`, `n${list.length}`, className)}>
       {list.map((_, i) => (
-        <li key={i}>
-          {marker === 'check' || marker === 'x' ? (
+        <li key={i} className={itemClassName}>
+          {marker === 'number' ? (
+            <span className="bul-num" data-pptx="text">{String(i + 1).padStart(2, '0')}</span>
+          ) : marker === 'check' || marker === 'x' ? (
             <span className="bul-ic">
               <Icon name={marker === 'check' ? 'check' : 'x'} size={14} stroke={3} />
             </span>

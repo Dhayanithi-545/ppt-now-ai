@@ -120,6 +120,41 @@ def slide_schema(layout: str) -> type[BaseModel]:
     return create_model(f"Slide_{layout.replace('-', '_')}", **fields)
 
 
+# ---------------------------------------------------------------- arrangements (variants)
+
+
+def variants(layout: str) -> list[dict]:
+    return SPEC.get(layout, {}).get("variants") or []
+
+
+def normalize_variant(layout: str, v: str | None) -> str | None:
+    """A valid arrangement id for `layout` (the default when `v` is missing or unknown)."""
+    vs = variants(layout)
+    ids = [x["id"] for x in vs]
+    v = (v or "").strip().lower()
+    return v if v in ids else (ids[0] if ids else None)
+
+
+def variant_pos(layout: str, v: str | None) -> str:
+    v = normalize_variant(layout, v)
+    return next((x["pos"] for x in variants(layout) if x["id"] == v), "top")
+
+
+def pick_variant(layout: str, avoid_pos: set[str], prefer: str | None = None) -> str | None:
+    """Keep `prefer` unless its title position repeats a neighbour's; then the first arrangement that doesn't."""
+    vs = variants(layout)
+    if not vs:
+        return None
+    cur = normalize_variant(layout, prefer)
+    if variant_pos(layout, cur) not in avoid_pos:
+        return cur
+    return next((x["id"] for x in vs if x["pos"] not in avoid_pos), cur)
+
+
+def variants_brief(layout: str) -> str:
+    return " | ".join(f"{x['id']}: {x['use']}" for x in variants(layout))
+
+
 def layout_brief(layout: str) -> str:
     """Human-readable field limits for the prompt."""
     lines = [f"Layout `{layout}` ({SPEC[layout]['name']}): {SPEC[layout]['use']}"]

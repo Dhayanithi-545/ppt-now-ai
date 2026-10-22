@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { api, download, type Capabilities, type ImageResult } from '../../api'
 import { missingData, remapContent } from '../../design/remap'
-import { LAYOUT_IDS, LAYOUT_SPEC, type Deck, type ImageRef, type LayoutId, type Slide, type Theme } from '../../design/types'
+import { LAYOUT_IDS, LAYOUT_SPEC, variantOf, variantsOf, type Deck, type ImageRef, type LayoutId, type Slide, type Theme } from '../../design/types'
 import { buildPptx } from '../../export/pptx'
 import { SlideCanvas } from '../../slides/SlideCanvas'
 import { SlideView } from '../../slides/SlideView'
@@ -11,14 +11,31 @@ import { Modal, Spinner, allThemes, toast, toastError, useCustomThemes } from '.
 
 // ------------------------------------------------------------------ layout picker
 
-export function LayoutPicker({ slide, theme, onPick, onClose }: { slide: Slide; theme: Theme; onPick: (l: LayoutId, needsAi: boolean) => void; onClose: () => void }) {
+export function LayoutPicker({ slide, theme, onPick, onArrange, onClose }: { slide: Slide; theme: Theme; onPick: (l: LayoutId, needsAi: boolean) => void; onArrange: (variant: string) => void; onClose: () => void }) {
   const groups = useMemo(() => {
     const g: Record<string, LayoutId[]> = {}
     for (const l of LAYOUT_IDS) (g[LAYOUT_SPEC[l].group] ??= []).push(l)
     return g
   }, [])
+  const variants = variantsOf(slide.layout)
+  const current = variantOf(slide.layout, slide.variant)
   return (
-    <Modal title="Change layout" onClose={onClose} wide>
+    <Modal title="Layout & arrangement" onClose={onClose} wide>
+      {variants.length > 1 && (
+        <div className="layout-group">
+          <div className="label">Arrangement · same content, moved around</div>
+          <div className="layout-grid">
+            {variants.map((v) => (
+              <button key={v.id} className={'layout-card' + (v.id === current ? ' on' : '')} onClick={() => onArrange(v.id)} title={v.use}>
+                <SlideCanvas slide={{ ...slide, id: `${slide.id}-v-${v.id}`, variant: v.id }} theme={theme} print />
+                <div className="lc-name">
+                  <span>{v.name}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <p className="hint" style={{ margin: '0 0 20px' }}>
         Previews use this slide's content. Layouts marked <b style={{ color: 'var(--app-accent)' }}>AI</b> need new data (a chart, table or more items), so Aira rewrites the slide for them.
       </p>
@@ -28,7 +45,7 @@ export function LayoutPicker({ slide, theme, onPick, onClose }: { slide: Slide; 
           <div className="layout-grid">
             {ids.map((l) => {
               const need = missingData(l, slide.content)
-              const preview: Slide = { ...slide, id: slide.id + '-p-' + l, layout: l, content: remapContent(slide.content, l) }
+              const preview: Slide = { ...slide, id: slide.id + '-p-' + l, layout: l, variant: l === slide.layout ? slide.variant : undefined, content: remapContent(slide.content, l) }
               return (
                 <button key={l} className={'layout-card' + (l === slide.layout ? ' on' : '')} onClick={() => onPick(l, !!need)}>
                   <SlideCanvas slide={need ? { ...preview, content: { ...preview.content, ...sampleFill(l) } } : preview} theme={theme} print />

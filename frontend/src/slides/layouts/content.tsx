@@ -13,7 +13,7 @@ export function Agenda() {
         <Txt p="title" as="h2" className="h1" fit />
         <Txt p="subtitle" as="p" className="lead" fit />
       </div>
-      <ol className={cx('ag-list', list.length > 4 && 'ag-dense')}>
+      <ol className={cx('ag-list', `n${list.length}`, list.length > 4 && 'ag-dense')}>
         {list.map((_, i) => (
           <li key={i}>
             <span className="ag-num">{String(i + 1).padStart(2, '0')}</span>
@@ -29,12 +29,13 @@ export function Agenda() {
 }
 
 export function TitleBullets() {
-  const { content } = useSlide()
+  const { content, variant } = useSlide()
   const many = (content.bullets?.length ?? 0) > 4
+  const cards = variant === 'cards'
   return (
     <div className="L tb">
       <Header />
-      <Bullets className={cx('tb-list', many && 'tb-cols')} />
+      <Bullets className={cx('tb-list', many && 'tb-cols')} marker={cards ? 'number' : undefined} itemClassName={cards ? 'card' : undefined} />
     </div>
   )
 }

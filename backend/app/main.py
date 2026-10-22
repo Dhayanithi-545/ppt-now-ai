@@ -155,7 +155,7 @@ async def generate(deck_id: str, req: GenerateRequest):
     if not deck.get("outline"):
         raise HTTPException(400, "deck has no outline")
     deck["slides"] = [
-        {"id": db.new_id(), "layout": o["layout"], "content": {"title": o["title"]}, "notes": "", "pending": True}
+        {"id": db.new_id(), "layout": o["layout"], "variant": o.get("variant"), "content": {"title": o["title"]}, "notes": "", "pending": True}
         for o in deck["outline"]
     ]
     deck["status"] = "generating"

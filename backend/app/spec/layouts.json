@@ -1,5 +1,5 @@
 {
-  "_doc": "Single source of truth for layouts. Every layout reads the same flat SlideContent; `fields` lists what it uses and the hard text limits (characters). Used by the React components, the Gemini prompts/schemas and validation.",
+  "_doc": "Single source of truth for layouts. Every layout reads the same flat SlideContent; `fields` lists what it uses and the hard text limits (characters). Used by the React components, the Gemini prompts/schemas and validation. `variants` are the arrangements the AI (or the user) can pick per slide; the first is the default. `pos` is where the title sits, used to keep neighbouring slides from looking alike.",
   "layouts": {
     "cover-hero": {
       "name": "Cover · Centered hero",
@@ -20,7 +20,27 @@
         "meta": {
           "max": 60
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Symmetric, ceremonial opening"
+        },
+        {
+          "id": "left",
+          "name": "Left aligned",
+          "pos": "side",
+          "use": "Confident, modern opening with the title on the left"
+        },
+        {
+          "id": "bottom",
+          "name": "Anchored low",
+          "pos": "bottom",
+          "use": "Editorial opening with the title sitting low on the slide"
+        }
+      ]
     },
     "cover-split": {
       "name": "Cover · Split image",
@@ -42,7 +62,21 @@
           "max": 60
         },
         "image": {}
-      }
+      },
+      "variants": [
+        {
+          "id": "image-right",
+          "name": "Image right",
+          "pos": "side",
+          "use": "Title left, picture right"
+        },
+        {
+          "id": "image-left",
+          "name": "Image left",
+          "pos": "side-r",
+          "use": "Picture left, title right"
+        }
+      ]
     },
     "cover-editorial": {
       "name": "Cover · Editorial",
@@ -63,7 +97,21 @@
         "meta": {
           "max": 60
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "bottom",
+          "name": "Title low",
+          "pos": "bottom",
+          "use": "Oversized title at the bottom"
+        },
+        {
+          "id": "top",
+          "name": "Title high",
+          "pos": "top",
+          "use": "Oversized title at the top, summary below"
+        }
+      ]
     },
     "agenda": {
       "name": "Agenda",
@@ -93,7 +141,21 @@
             }
           }
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "split",
+          "name": "Side list",
+          "pos": "side",
+          "use": "Title on the left, numbered list on the right"
+        },
+        {
+          "id": "grid",
+          "name": "Tiles",
+          "pos": "top",
+          "use": "Title on top, parts as numbered tiles"
+        }
+      ]
     },
     "section-divider": {
       "name": "Section divider",
@@ -114,7 +176,27 @@
         "meta": {
           "max": 4
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "side",
+          "name": "Number beside",
+          "pos": "side",
+          "use": "Big outlined number beside the title"
+        },
+        {
+          "id": "stacked",
+          "name": "Number above",
+          "pos": "top",
+          "use": "Number above a left-aligned title"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Everything centered"
+        }
+      ]
     },
     "big-statement": {
       "name": "Big statement",
@@ -135,7 +217,27 @@
         "subtitle": {
           "max": 120
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "left",
+          "name": "Left",
+          "pos": "side",
+          "use": "Statement left-aligned, vertically centered"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Statement centered for maximum calm"
+        },
+        {
+          "id": "bottom",
+          "name": "Anchored low",
+          "pos": "bottom",
+          "use": "Huge statement anchored to the bottom"
+        }
+      ]
     },
     "title-bullets": {
       "name": "Title + bullets",
@@ -158,7 +260,27 @@
           "max": 6,
           "itemMax": 110
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "list",
+          "name": "Ruled list",
+          "pos": "top",
+          "use": "Title on top, ruled list below"
+        },
+        {
+          "id": "split",
+          "name": "Side title",
+          "pos": "side",
+          "use": "Big title in a left column, points on the right"
+        },
+        {
+          "id": "cards",
+          "name": "Numbered cards",
+          "pos": "top-grid",
+          "use": "Title on top, each point in its own numbered card"
+        }
+      ]
     },
     "stats-big-numbers": {
       "name": "Big numbers",
@@ -191,7 +313,27 @@
             }
           }
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "row",
+          "name": "Row",
+          "pos": "top",
+          "use": "Title on top, figures in a row along the bottom"
+        },
+        {
+          "id": "split",
+          "name": "Side title",
+          "pos": "side",
+          "use": "Title on the left, figures stacked on the right"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Centered title and figures"
+        }
+      ]
     },
     "kpi-cards": {
       "name": "KPI cards",
@@ -229,7 +371,21 @@
           }
         }
       },
-      "roles": "value = the metric, label = metric name, delta = change vs last period with sign."
+      "roles": "value = the metric, label = metric name, delta = change vs last period with sign.",
+      "variants": [
+        {
+          "id": "row",
+          "name": "Row",
+          "pos": "top",
+          "use": "Title on top, cards in one row"
+        },
+        {
+          "id": "split",
+          "name": "Side title",
+          "pos": "side",
+          "use": "Title on the left, cards in a grid on the right"
+        }
+      ]
     },
     "icon-grid-3": {
       "name": "Icon features · 3",
@@ -260,7 +416,27 @@
             }
           }
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Title on top, three cards"
+        },
+        {
+          "id": "list",
+          "name": "Side list",
+          "pos": "side",
+          "use": "Title on the left, ideas as rows on the right"
+        },
+        {
+          "id": "open",
+          "name": "Open columns",
+          "pos": "center",
+          "use": "Centered title, open columns without cards"
+        }
+      ]
     },
     "icon-grid-4": {
       "name": "Icon features · 4",
@@ -291,7 +467,27 @@
             }
           }
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Title on top, four cards"
+        },
+        {
+          "id": "list",
+          "name": "Side grid",
+          "pos": "side",
+          "use": "Title on the left, ideas in a 2×2 grid"
+        },
+        {
+          "id": "open",
+          "name": "Open columns",
+          "pos": "center",
+          "use": "Centered title, open columns without cards"
+        }
+      ]
     },
     "icon-grid-6": {
       "name": "Icon features · 6",
@@ -319,7 +515,21 @@
             }
           }
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Title on top, 3×2 cards"
+        },
+        {
+          "id": "list",
+          "name": "Open list",
+          "pos": "top-grid",
+          "use": "Title on top, two columns of ruled rows"
+        }
+      ]
     },
     "image-text-left": {
       "name": "Image left + text",
@@ -343,7 +553,27 @@
           "itemMax": 70
         },
         "image": {}
-      }
+      },
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Standard",
+          "pos": "side-r",
+          "use": "Image left, text right"
+        },
+        {
+          "id": "wide",
+          "name": "Wide image",
+          "pos": "side-r",
+          "use": "Larger image, tighter text column"
+        },
+        {
+          "id": "bleed",
+          "name": "Edge to edge",
+          "pos": "side-r",
+          "use": "Image runs to the slide edges"
+        }
+      ]
     },
     "image-text-right": {
       "name": "Text + image right",
@@ -367,7 +597,27 @@
           "itemMax": 70
         },
         "image": {}
-      }
+      },
+      "variants": [
+        {
+          "id": "standard",
+          "name": "Standard",
+          "pos": "side",
+          "use": "Text left, image right"
+        },
+        {
+          "id": "wide",
+          "name": "Wide image",
+          "pos": "side",
+          "use": "Larger image, tighter text column"
+        },
+        {
+          "id": "bleed",
+          "name": "Edge to edge",
+          "pos": "side",
+          "use": "Image runs to the slide edges"
+        }
+      ]
     },
     "full-bleed-image": {
       "name": "Full-bleed image",
@@ -386,7 +636,27 @@
           "max": 130
         },
         "image": {}
-      }
+      },
+      "variants": [
+        {
+          "id": "bottom-left",
+          "name": "Caption low",
+          "pos": "bottom",
+          "use": "Headline low on the left"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Headline centered over a dimmed photo"
+        },
+        {
+          "id": "panel",
+          "name": "Side panel",
+          "pos": "side",
+          "use": "Headline in a dark panel on the left"
+        }
+      ]
     },
     "timeline": {
       "name": "Timeline / roadmap",
@@ -417,7 +687,21 @@
           }
         }
       },
-      "roles": "items in chronological order; value is the date or period."
+      "roles": "items in chronological order; value is the date or period.",
+      "variants": [
+        {
+          "id": "horizontal",
+          "name": "Horizontal",
+          "pos": "top",
+          "use": "Milestones left to right"
+        },
+        {
+          "id": "vertical",
+          "name": "Vertical",
+          "pos": "side",
+          "use": "Title on the left, milestones top to bottom"
+        }
+      ]
     },
     "process-steps": {
       "name": "Process steps",
@@ -449,7 +733,21 @@
           }
         }
       },
-      "roles": "items in the order they happen."
+      "roles": "items in the order they happen.",
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Title on top, steps as connected cards"
+        },
+        {
+          "id": "vertical",
+          "name": "Vertical",
+          "pos": "side",
+          "use": "Title on the left, steps as numbered rows"
+        }
+      ]
     },
     "comparison": {
       "name": "Comparison · 2 columns",
@@ -483,7 +781,21 @@
           }
         }
       },
-      "roles": "items[0] = the old / alternative option, items[1] = the recommended option (it is visually emphasised)."
+      "roles": "items[0] = the old / alternative option, items[1] = the recommended option (it is visually emphasised).",
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Title on top, two cards"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Centered title, two cards"
+        }
+      ]
     },
     "before-after": {
       "name": "Before / after",
@@ -513,7 +825,21 @@
           }
         }
       },
-      "roles": "items[0] = BEFORE (the old state), items[1] = AFTER (the improved state)."
+      "roles": "items[0] = BEFORE (the old state), items[1] = AFTER (the improved state).",
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Panels",
+          "pos": "top",
+          "use": "Title on top, two panels"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Centered title, two panels"
+        }
+      ]
     },
     "pros-cons": {
       "name": "Pros / cons",
@@ -543,7 +869,21 @@
           }
         }
       },
-      "roles": "items[0] = advantages / opportunities, items[1] = disadvantages / risks."
+      "roles": "items[0] = advantages / opportunities, items[1] = disadvantages / risks.",
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Title on top, two cards"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Centered title, two cards"
+        }
+      ]
     },
     "chart-insight": {
       "name": "Chart + insight",
@@ -574,7 +914,27 @@
             }
           }
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "right",
+          "name": "Insights right",
+          "pos": "top",
+          "use": "Chart left, takeaways right"
+        },
+        {
+          "id": "left",
+          "name": "Insights left",
+          "pos": "top-r",
+          "use": "Takeaways left, chart right"
+        },
+        {
+          "id": "below",
+          "name": "Insights below",
+          "pos": "top-grid",
+          "use": "Chart on top, takeaways in a row underneath"
+        }
+      ]
     },
     "chart-full": {
       "name": "Chart · full width",
@@ -596,7 +956,21 @@
           "maxCategories": 12,
           "maxSeries": 4
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "top",
+          "name": "Title on top",
+          "pos": "top",
+          "use": "Title on top, full-width chart"
+        },
+        {
+          "id": "side",
+          "name": "Side title",
+          "pos": "side",
+          "use": "Title and takeaway on the left, chart on the right"
+        }
+      ]
     },
     "table": {
       "name": "Table",
@@ -619,7 +993,21 @@
           "maxRows": 6,
           "cellMax": 40
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "top",
+          "name": "Title on top",
+          "pos": "top",
+          "use": "Title on top"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Centered title"
+        }
+      ]
     },
     "quote": {
       "name": "Quote",
@@ -637,7 +1025,27 @@
         "role": {
           "max": 50
         }
-      }
+      },
+      "variants": [
+        {
+          "id": "left",
+          "name": "Left",
+          "pos": "side",
+          "use": "Quote left-aligned"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Quote centered"
+        },
+        {
+          "id": "split",
+          "name": "Split",
+          "pos": "side-r",
+          "use": "Author on the left, quote on the right"
+        }
+      ]
     },
     "testimonials": {
       "name": "Testimonials",
@@ -668,7 +1076,21 @@
           }
         }
       },
-      "roles": "items: text = the quote, title = person name, label = role and place."
+      "roles": "items: text = the quote, title = person name, label = role and place.",
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Equal quote cards"
+        },
+        {
+          "id": "featured",
+          "name": "Featured",
+          "pos": "top-grid",
+          "use": "One large quote, the others beside it"
+        }
+      ]
     },
     "team-grid": {
       "name": "Team",
@@ -702,7 +1124,21 @@
           }
         }
       },
-      "roles": "items are people: title = full name, label = role, text = one-line credential."
+      "roles": "items are people: title = full name, label = role, text = one-line credential.",
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Portraits",
+          "pos": "top",
+          "use": "Title on top, portraits in a row"
+        },
+        {
+          "id": "split",
+          "name": "Side list",
+          "pos": "side",
+          "use": "Title on the left, people as a list"
+        }
+      ]
     },
     "pricing-tiers": {
       "name": "Pricing tiers",
@@ -742,7 +1178,21 @@
           }
         }
       },
-      "roles": "items from cheapest to most expensive; mark the recommended one with highlight=true."
+      "roles": "items from cheapest to most expensive; mark the recommended one with highlight=true.",
+      "variants": [
+        {
+          "id": "cards",
+          "name": "Cards",
+          "pos": "top",
+          "use": "Title on top"
+        },
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Centered title"
+        }
+      ]
     },
     "problem-solution": {
       "name": "Problem / solution",
@@ -776,7 +1226,15 @@
           }
         }
       },
-      "roles": "items[0] = THE PROBLEM (pain point; title like \"The problem\"), items[1] = THE SOLUTION (your answer; title like \"Our solution\")."
+      "roles": "items[0] = THE PROBLEM (pain point; title like \"The problem\"), items[1] = THE SOLUTION (your answer; title like \"Our solution\").",
+      "variants": [
+        {
+          "id": "split",
+          "name": "Split",
+          "pos": "side",
+          "use": "Problem left, solution panel right"
+        }
+      ]
     },
     "market-size": {
       "name": "Market size · TAM SAM SOM",
@@ -810,7 +1268,21 @@
           }
         }
       },
-      "roles": "items in order TAM, SAM, SOM (label exactly \"TAM\", \"SAM\", \"SOM\"); values decrease."
+      "roles": "items in order TAM, SAM, SOM (label exactly \"TAM\", \"SAM\", \"SOM\"); values decrease.",
+      "variants": [
+        {
+          "id": "circles-left",
+          "name": "Circles left",
+          "pos": "top",
+          "use": "Circles left, figures right"
+        },
+        {
+          "id": "circles-right",
+          "name": "Circles right",
+          "pos": "top-r",
+          "use": "Figures left, circles right"
+        }
+      ]
     },
     "swot": {
       "name": "SWOT",
@@ -840,7 +1312,21 @@
           }
         }
       },
-      "roles": "items in order: Strengths, Weaknesses, Opportunities, Threats (titles exactly these words)."
+      "roles": "items in order: Strengths, Weaknesses, Opportunities, Threats (titles exactly these words).",
+      "variants": [
+        {
+          "id": "grid",
+          "name": "Grid",
+          "pos": "top",
+          "use": "Title on top, 2×2 grid"
+        },
+        {
+          "id": "split",
+          "name": "Side title",
+          "pos": "side",
+          "use": "Title on the left, 2×2 grid on the right"
+        }
+      ]
     },
     "closing": {
       "name": "Closing / contact",
@@ -869,7 +1355,21 @@
           }
         }
       },
-      "roles": "items are contact details (email, website, phone or social handle) with fitting icons; may be empty."
+      "roles": "items are contact details (email, website, phone or social handle) with fitting icons; may be empty.",
+      "variants": [
+        {
+          "id": "center",
+          "name": "Centered",
+          "pos": "center",
+          "use": "Centered sign-off"
+        },
+        {
+          "id": "left",
+          "name": "Left aligned",
+          "pos": "side",
+          "use": "Left-aligned sign-off"
+        }
+      ]
     }
   }
 }

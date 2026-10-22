@@ -401,7 +401,7 @@ function OutlineEditor({ deck, setDeck, onBack, onGenerate }: { deck: Deck; setD
               <input className="input ol-title" aria-label={`Slide ${i + 1} title`} value={o.title} onChange={(e) => upd(i, { title: e.target.value })} />
               <input className="input ol-intent" aria-label={`Slide ${i + 1} intent`} value={o.intent} placeholder="What should this slide say?" onChange={(e) => upd(i, { intent: e.target.value })} />
             </div>
-            <select className="select" aria-label={`Slide ${i + 1} layout`} value={o.layout} onChange={(e) => upd(i, { layout: e.target.value as LayoutId })}>
+            <select className="select" aria-label={`Slide ${i + 1} layout`} value={o.layout} onChange={(e) => upd(i, { layout: e.target.value as LayoutId, variant: undefined })}>
               {LAYOUT_IDS.map((l) => (
                 <option key={l} value={l}>{LAYOUT_SPEC[l].name}</option>
               ))}

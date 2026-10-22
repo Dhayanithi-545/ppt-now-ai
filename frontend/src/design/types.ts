@@ -113,6 +113,8 @@ export type LayoutId = keyof typeof layoutSpec.layouts
 export interface Slide {
   id: string
   layout: LayoutId
+  /** Arrangement of the layout (one of LAYOUT_SPEC[layout].variants); the AI picks it per slide. */
+  variant?: string
   content: SlideContent
   notes?: string
   /** Still being generated (skeleton in the editor). */
@@ -124,6 +126,7 @@ export interface Slide {
 export interface OutlineItem {
   title: string
   layout: LayoutId
+  variant?: string
   intent: string
 }
 
@@ -153,4 +156,22 @@ export interface Deck {
 export const LAYOUT_SPEC = layoutSpec.layouts
 export const LAYOUT_IDS = Object.keys(layoutSpec.layouts) as LayoutId[]
 export const FONTS = design.fonts
+
+export interface Variant {
+  id: string
+  name: string
+  /** Where the title sits; neighbouring slides avoid repeating it. */
+  pos: string
+  use: string
+}
+
+export function variantsOf(layout: LayoutId): Variant[] {
+  return (LAYOUT_SPEC[layout] as { variants?: Variant[] } | undefined)?.variants ?? []
+}
+
+/** The slide's arrangement, falling back to the layout's default when it is missing or belongs to another layout. */
+export function variantOf(layout: LayoutId, variant?: string): string {
+  const vs = variantsOf(layout)
+  return vs.find((v) => v.id === variant)?.id ?? vs[0]?.id ?? 'default'
+}
 export const ALLOWED_ICONS = design.icons

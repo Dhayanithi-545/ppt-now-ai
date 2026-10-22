@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { assetUrl } from '../config'
 import { heroVars, themeVars } from '../design/themeVars'
-import { FONTS, type Slide, type Theme } from '../design/types'
+import { FONTS, variantOf, variantsOf, type Slide, type Theme } from '../design/types'
 import { SlideCtx, type SlideCtxValue } from './context'
 import { Decor } from './Decor'
 import { INVERSE_LAYOUTS, LAYOUTS, isHero } from './registry'
@@ -60,6 +60,8 @@ export function SlideView({ slide, theme, index = 0, total = 1, deckTitle = '', 
   const ref = useRef<HTMLDivElement>(null)
   const Layout = LAYOUTS[slide.layout] ?? LAYOUTS['title-bullets']
   const hero = isHero(slide.layout)
+  const variant = variantOf(slide.layout, slide.variant)
+  const pos = variantsOf(slide.layout).find((v) => v.id === variant)?.pos
   const hv = INVERSE_LAYOUTS.has(slide.layout) ? heroVars(theme) : null
   const inverse = !!hv
   const style = useMemo(() => ({ ...themeVars(theme), ...(hv ?? {}) }) as CSSProperties, [theme, hv])
@@ -88,10 +90,10 @@ export function SlideView({ slide, theme, index = 0, total = 1, deckTitle = '', 
     root.dataset.overflow = String(overflow)
     onFit?.(fit, overflow)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contentKey, slide.layout, theme, fontsReady])
+  }, [contentKey, slide.layout, variant, theme, fontsReady])
 
   const ctx: SlideCtxValue = {
-    slide, content: slide.content, theme, index, total, deckTitle, inverse, editable, print, onEdit, onImageClick,
+    slide, content: slide.content, variant, theme, index, total, deckTitle, inverse, editable, print, onEdit, onImageClick,
   }
 
   return (
@@ -100,6 +102,8 @@ export function SlideView({ slide, theme, index = 0, total = 1, deckTitle = '', 
         ref={ref}
         className={cx('sl', `sl-${theme.mode}`, hero ? 'sl-hero' : 'sl-content', inverse && 'sl-inverse', editable && 'sl-editable', `card-${theme.cardStyle}`, `shadow-${theme.shadow}`, theme.gradientText && !inverse && 'grad-text-on')}
         data-layout={slide.layout}
+        data-variant={variant}
+        data-pos={pos}
         data-theme={theme.id}
         data-motif={theme.motif}
         data-marker={bulletMarker(theme)}

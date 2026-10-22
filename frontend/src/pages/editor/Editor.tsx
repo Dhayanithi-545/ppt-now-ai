@@ -185,6 +185,11 @@ export default function Editor() {
     else ed.changeLayout(current, l)
   }
 
+  function pickVariant(v: string) {
+    setDialog(null)
+    ed.changeVariant(current, v)
+  }
+
   function pickImage(img: ImageRef | null) {
     setDialog(null)
     if (!slide) return
@@ -369,7 +374,7 @@ export default function Editor() {
             <div className="stage-under">
               <div className="slide-tools">
                 <div className="group">
-                  <button className="btn btn-ghost btn-sm" onClick={() => setDialog('layout')} title="Change layout" aria-label="Change layout" disabled={!!slideBusy || slide.pending}><LayoutTemplate size={16} /> <span className="lbl">{LAYOUT_SPEC[slide.layout].name}</span></button>
+                  <button className="btn btn-ghost btn-sm" onClick={() => setDialog('layout')} title="Change layout or arrangement" aria-label="Change layout or arrangement" disabled={!!slideBusy || slide.pending}><LayoutTemplate size={16} /> <span className="lbl">{LAYOUT_SPEC[slide.layout].name}</span></button>
                   {hasImage && <button className="btn btn-ghost btn-sm" onClick={() => setDialog('image')} title="Swap image" aria-label="Swap image" disabled={!!slideBusy || slide.pending}><ImageIcon size={16} /> <span className="lbl">Image</span></button>}
                   <button className="btn btn-ghost btn-sm" onClick={() => regenerate(current)} disabled={!!slideBusy || slide.pending || generating} title="Regenerate this slide" aria-label="Regenerate"><RefreshCw size={16} /> <span className="lbl">Regenerate</span></button>
                 </div>
@@ -421,7 +426,7 @@ export default function Editor() {
         </main>
       </div>
 
-      {dialog === 'layout' && slide && <LayoutPicker slide={slide} theme={theme} onPick={pickLayout} onClose={() => setDialog(null)} />}
+      {dialog === 'layout' && slide && <LayoutPicker slide={slide} theme={theme} onPick={pickLayout} onArrange={pickVariant} onClose={() => setDialog(null)} />}
       {dialog === 'image' && slide && <ImagePicker image={slide.content.image} caps={caps} onPick={pickImage} onClose={() => setDialog(null)} />}
       {dialog === 'versions' && <VersionsDialog deck={deck} onRestore={(d: Deck) => { ed.commit({ ...d, id: deck.id }); toast('Version restored') }} onClose={() => setDialog(null)} />}
       {dialog === 'export' && <ExportDialog deck={deck} theme={theme} onClose={() => setDialog(null)} />}

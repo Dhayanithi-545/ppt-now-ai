@@ -7,8 +7,10 @@ Every chosen image is cached under data/media and served from /media (same origi
 import asyncio
 import hashlib
 import logging
+import ssl
 
 import httpx
+import truststore
 from google.genai import types
 
 from . import capabilities
@@ -17,6 +19,8 @@ from .llm import get_client
 
 log = logging.getLogger(__name__)
 TIMEOUT = httpx.Timeout(12.0)
+# OS certificate store instead of certifi: works behind corporate TLS-inspecting proxies.
+SSL_CONTEXT = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 
 
 def _media_url(name: str) -> str:
@@ -41,7 +45,7 @@ async def search_stock(query: str, n: int = 12) -> list[dict]:
     """Search the configured stock provider. Returns [] when no key is set or the call fails."""
     s = get_settings()
     try:
-        async with httpx.AsyncClient(timeout=TIMEOUT) as client:
+        async with httpx.AsyncClient(timeout=TIMEOUT, verify=SSL_CONTEXT) as client:
             if s.unsplash_access_key:
                 r = await client.get(
                     "https://api.unsplash.com/search/photos",
@@ -78,7 +82,7 @@ async def search_stock(query: str, n: int = 12) -> list[dict]:
 async def cache_remote(url: str) -> str | None:
     """Download a remote image into the media cache and return its /media URL."""
     try:
-        async with httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=True) as client:
+        async with httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=True, verify=SSL_CONTEXT) as client:
             r = await client.get(url)
             r.raise_for_status()
         ctype = r.headers.get("content-type", "")

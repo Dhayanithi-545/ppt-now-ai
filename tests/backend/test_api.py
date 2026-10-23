@@ -7,6 +7,9 @@ from fastapi.testclient import TestClient
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
     monkeypatch.setenv("DATA_DIR", str(tmp_path))
+    # Real env vars beat backend/.env: keep a developer's stock-photo keys out of the tests.
+    monkeypatch.setenv("UNSPLASH_ACCESS_KEY", "")
+    monkeypatch.setenv("PEXELS_API_KEY", "")
     from app import config
     from app.services import capabilities
 
